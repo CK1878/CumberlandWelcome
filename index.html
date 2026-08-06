@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore CUMBRIA™ | Regional Engine & Ethical Ticketing</title>
+    <title>Explore CUMBRIA™ | Regional Engine & Fair Ticketing</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,6 +27,8 @@
     </script>
     <style>
         .glass-panel { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-brand-600 selection:text-white pb-24">
@@ -40,96 +42,100 @@
                 </div>
                 <div>
                     <span class="font-extrabold tracking-tight text-white text-lg">EXPLORE<span class="text-brand-600">CUMBRIA</span></span>
-                    <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800/50">FAIR TICKETING ACTIVE</span>
+                    <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800/50">FAMILY & LOCAL ENGINE</span>
                 </div>
             </div>
 
             <!-- Context Controls -->
             <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
                 <button onclick="updateContext('sunny')" id="btn-sunny" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-600 text-white transition">☀️ Sun</button>
-                <button onclick="updateContext('rainy')" id="btn-rainy" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🌧️ Rain</button>
-                <button onclick="updateContext('dining')" id="btn-dining" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🌙 Night</button>
+                <button onclick="updateContext('rainy')" id="btn-rainy" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🌧️ Rain (Play Areas)</button>
+                <button onclick="updateContext('dining')" id="btn-dining" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">☕ Cafés & Food</button>
             </div>
         </div>
     </header>
 
     <!-- 2. Hero Section -->
-    <section class="relative bg-slate-950 pt-10 pb-16 border-b border-slate-800">
+    <section class="relative bg-slate-950 pt-10 pb-14 border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-4">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Zero Exploitative Booking Fees for Local Venues & Artists
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium mb-4">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                Cafés, Play Centres, Independent Shops & Local Events
             </div>
 
             <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-tight">
-                Carlisle & Cumbria. <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-sky-400 to-emerald-400">Live Events, Fair Tickets & Local Spots.</span>
+                Carlisle & Beyond. <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-sky-400 to-emerald-400">Everything Local in One Place.</span>
             </h1>
             <p class="mt-3 text-base text-slate-400 max-w-2xl mx-auto">
-                Discover pub gigs, charity fun days, and local deals—with direct 10-second ticket booking that keeps revenue in Cumbria.
+                Find indoor play areas on rainy days, local café specials, artisan markets, and community events without trawling social media.
             </p>
         </div>
     </section>
 
     <!-- 3. Main Dashboard -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Context Bar -->
-        <div id="context-banner" class="mb-10 p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+        <!-- Context Banner -->
+        <div id="context-banner" class="mb-8 p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <span id="context-icon" class="text-2xl">☀️</span>
                 <div>
                     <h3 id="context-title" class="font-bold text-white text-sm">Clear Skies in Carlisle (18°C)</h3>
-                    <p id="context-desc" class="text-xs text-slate-400">Showing outdoor heritage, beer gardens, and local daytime gigs.</p>
+                    <p id="context-desc" class="text-xs text-slate-400">Showing outdoor parks, garden cafés, and daytime community activities.</p>
                 </div>
             </div>
-            <span class="text-[10px] font-mono bg-slate-900 text-emerald-400 px-2 py-1 rounded border border-slate-800">HYPER-LOCAL ENGINE</span>
+            <span class="text-[10px] font-mono bg-slate-900 text-emerald-400 px-2 py-1 rounded border border-slate-800">LIVE LOCAL FEED</span>
         </div>
 
-        <!-- TICKETING & EVENTS AGGREGATOR -->
-        <section class="mb-16">
+        <!-- CATEGORY QUICK-FILTER BAR (NON-PUB FOCUS) -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-3 mb-8">
+            <button onclick="filterCategory('all')" id="cat-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-md">🌟 Show All</button>
+            <button onclick="filterCategory('play')" id="cat-play" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🧸 Kids & Soft Play</button>
+            <button onclick="filterCategory('cafes')" id="cat-cafes" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">☕ Cafés & Bakeries</button>
+            <button onclick="filterCategory('events')" id="cat-events" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🎈 Family Events & Fair Tickets</button>
+            <button onclick="filterCategory('retail')" id="cat-retail" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🛍️ Independent Retail</button>
+        </div>
+
+        <!-- DAYTIME & FAMILY FEATURED SPOTLIGHT -->
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white tracking-tight">Family & Daytime Local Features</h2>
+                    <p class="text-xs text-slate-400">Great spots for children, daytime coffee, and community hubs</p>
+                </div>
+            </div>
+
+            <div id="daytime-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Javascript Renders Daytime Cards Here -->
+            </div>
+        </section>
+
+        <!-- WHAT'S ON & COMMUNITY EVENTS (WITH FAIR TICKETING) -->
+        <section class="mb-14">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4 border-b border-slate-800 pb-4">
                 <div>
-                    <h2 class="text-2xl font-extrabold text-white tracking-tight">What's On & Fair Tickets</h2>
-                    <p class="text-xs text-slate-400 mt-1">Direct box office for local Carlisle performers, acoustic sets, and community events.</p>
-                </div>
-
-                <div class="flex gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 self-start md:self-auto">
-                    <button onclick="filterEvents('all')" id="ev-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white transition">All Events</button>
-                    <button onclick="filterEvents('gigs')" id="ev-gigs" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🎸 Gigs</button>
-                    <button onclick="filterEvents('family')" id="ev-family" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🎈 Family & Charity</button>
+                    <h2 class="text-xl font-bold text-white tracking-tight">What's On & Fair Tickets</h2>
+                    <p class="text-xs text-slate-400 mt-1">Community fun days, local workshops, acoustic sets, and charity runs with £0 admin fees.</p>
                 </div>
             </div>
 
             <!-- Event Grid -->
             <div id="events-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Javascript Renders Cards Here -->
-            </div>
-        </section>
-
-        <!-- LOCAL BUSINESS DIRECTORY -->
-        <section>
-            <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
-                <div>
-                    <h2 class="text-xl font-bold text-white tracking-tight">Independent Spotlights</h2>
-                    <p class="text-xs text-slate-400">Weighted to prioritize local sole traders and Cumbrian businesses</p>
-                </div>
-            </div>
-            <div id="card-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Javascript Renders Directory Cards Here -->
+                <!-- Javascript Renders Event Cards Here -->
             </div>
         </section>
 
     </main>
 
-    <!-- 4. CHECKOUT MODAL (Simulating Fair Ticketing Engine) -->
+    <!-- 4. CHECKOUT MODAL (Fair Ticketing Engine) -->
     <div id="ticket-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
             
             <div class="mb-4">
-                <span class="text-[10px] font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">NO HIDDEN BOOKING FEES</span>
+                <span class="text-[10px] font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">NO EXPLOITATIVE FEES</span>
                 <h3 id="modal-event-title" class="text-xl font-bold text-white mt-2">Event Title</h3>
                 <p id="modal-event-venue" class="text-xs text-slate-400">Venue details</p>
             </div>
@@ -137,15 +143,15 @@
             <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-4 space-y-2">
                 <div class="flex justify-between text-xs text-slate-300">
                     <span>Ticket Price:</span>
-                    <span id="modal-ticket-price" class="font-bold text-white">£10.00</span>
+                    <span id="modal-ticket-price" class="font-bold text-white">£5.00</span>
                 </div>
                 <div class="flex justify-between text-xs text-slate-300">
-                    <span>Corporate "Admin/Booking" Fee:</span>
+                    <span>Corporate "Booking" Fee:</span>
                     <span class="font-bold text-emerald-400">£0.00 (Saved £3.50)</span>
                 </div>
                 <div class="border-t border-slate-800 pt-2 flex justify-between text-sm font-bold text-white">
                     <span>Total Due:</span>
-                    <span id="modal-total-price">£10.00</span>
+                    <span id="modal-total-price">£5.00</span>
                 </div>
             </div>
 
@@ -162,11 +168,11 @@
                 </div>
             </form>
 
-            <!-- Success State Screen (Hidden initially) -->
+            <!-- Success State Screen -->
             <div id="modal-success" class="hidden text-center py-4">
                 <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 border border-emerald-500/30">✓</div>
                 <h4 class="text-lg font-bold text-white">Ticket Delivered!</h4>
-                <p class="text-xs text-slate-400 mt-1">A digital barcode has been sent to your email and added to your wallet preview below.</p>
+                <p class="text-xs text-slate-400 mt-1">Digital ticket sent to email and ready for door scanning.</p>
                 
                 <div class="mt-4 p-4 bg-white text-slate-950 rounded-xl font-mono text-left text-xs shadow-inner">
                     <div class="flex justify-between border-b border-slate-200 pb-2 mb-2 font-sans font-bold">
@@ -174,7 +180,7 @@
                         <span class="text-emerald-700">VALID</span>
                     </div>
                     <p id="ticket-pass-name" class="font-bold">Event Name</p>
-                    <p class="text-[10px] text-slate-600">Entry: Show QR at Door</p>
+                    <p class="text-[10px] text-slate-600">Show QR code on arrival</p>
                     <div class="mt-3 bg-slate-900 text-white p-2 text-center rounded text-sm tracking-widest font-bold">
                         ||| | |||| || ||| ||||
                     </div>
@@ -186,84 +192,116 @@
     </div>
 
     <script>
+        // Daytime Places (Cafes, Soft Play, Family Spots, Retail)
+        const daytimeSpots = [
+            {
+                id: 1,
+                title: "Little Explorers Soft Play & Café",
+                category: "play",
+                typeTag: "🧸 Kids & Toddlers",
+                location: "Kingstown, Carlisle",
+                desc: "Dedicated under-5s soft play area with high-quality barista coffee, fresh baked treats, and free parking.",
+                feature: "🌧️ Ideal for Rainy Days",
+                badgeColor: "bg-purple-500/10 text-purple-400 border-purple-500/20"
+            },
+            {
+                id: 2,
+                title: "Castle Street Coffee & Bakehouse",
+                category: "cafes",
+                typeTag: "☕ Café & Bakery",
+                location: "Historic Quarter, Carlisle",
+                desc: "Specialty Cumbrian roasted coffee, homemade traybakes, and highchairs/pram-friendly seating.",
+                feature: "🍰 Fresh Daily Baking",
+                badgeColor: "bg-amber-500/10 text-amber-400 border-amber-500/20"
+            },
+            {
+                id: 3,
+                title: "Abbey Street Artisan Craft Hub",
+                category: "retail",
+                typeTag: "🛍️ Independent Retail",
+                location: "Abbey St, Carlisle",
+                desc: "Co-op gallery featuring local Cumbrian ceramicists, artists, handmade gifts, and craft workshops.",
+                feature: "🎨 100% Cumbrian Makers",
+                badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+            }
+        ];
+
+        // Events & Activities Feed
         const events = [
             {
                 id: 101,
-                title: "Local Folk & Acoustic Night",
-                venue: "The Cumbrian Tap • Fisher St",
-                type: "gigs",
-                price: 5.00,
+                title: "Kids Craft & Clay Pottery Session",
+                venue: "Abbey Street Arts Hub",
+                category: "play",
+                price: 6.00,
                 isTicketed: true,
-                date: "Tonight • 20:00",
-                desc: "Intimate acoustic performance featuring Cumbrian songwriters. 100% ticket price to artists."
+                date: "Saturday • 10:30 AM",
+                desc: "Guided 45-minute messy clay workshop for kids aged 3–10. All materials included."
             },
             {
                 id: 102,
-                title: "Carlisle Historic Quarter Market",
-                venue: "Cathedral Grounds • Abbey St",
-                type: "family",
+                title: "Carlisle Producers & Farmers Market",
+                venue: "Cathedral Green • Abbey St",
+                category: "cafes",
                 price: 0,
                 isTicketed: false,
                 date: "Saturday • 10:00 - 15:00",
-                desc: "Local artisan bread, craft stalls, and family workshops across the historic quarter."
+                desc: "Local Cumbrian cheeses, artisan breads, hot food trucks, and live acoustic music."
             },
             {
                 id: 103,
-                title: "Cumbria Hospice Charity Walk",
+                title: "Community Charity 5k & Family Fun Day",
                 venue: "Rickerby Park Pavilion",
-                type: "family",
-                price: 8.00,
+                category: "events",
+                price: 5.00,
                 isTicketed: true,
-                date: "Sunday • 11:00",
-                desc: "Community 5k fun walk raising funds for local Cumbrian care. Zero platform fees."
+                date: "Sunday • 11:00 AM",
+                desc: "Family walk/run with bouncy castles, face painting, and local food stalls. Zero ticket fees."
             }
         ];
 
-        const listings = [
-            {
-                title: "Castle Street Coffee",
-                category: "Food & Drink",
-                type: "indy",
-                isIndoor: true,
-                rating: 4.9,
-                desc: "Specialty coffee roasters and artisan traybakes. 2 mins walk from Castle.",
-                tag: "Verified Independent",
-                badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-            },
-            {
-                title: "Carlisle Castle Fortress",
-                category: "Heritage",
-                type: "heritage",
-                isIndoor: false,
-                rating: 4.7,
-                desc: "900 years of border history and panoramic city wall walks.",
-                tag: "Historic Landmark",
-                badgeColor: "bg-slate-700/50 text-slate-300 border-slate-600"
-            },
-            {
-                title: "The Abbey Gallery & Crafts",
-                category: "Shopping",
-                type: "indy",
-                isIndoor: true,
-                rating: 4.9,
-                desc: "Independent gallery showcasing Cumbrian fine art, ceramics, and gifts.",
-                tag: "Sole Trader Craft",
-                badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-            }
-        ];
+        let currentCategory = 'all';
 
-        let activeContext = 'sunny';
-        let activeEventFilter = 'all';
+        function renderDaytimeSpots() {
+            const grid = document.getElementById('daytime-grid');
+            grid.innerHTML = '';
+
+            let filtered = daytimeSpots.filter(s => {
+                if (currentCategory === 'all') return true;
+                return s.category === currentCategory;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="text-xs text-slate-500 col-span-3 py-4">Showing all local listings matching this category below.</p>`;
+                return;
+            }
+
+            filtered.forEach(s => {
+                grid.innerHTML += `
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-slate-700 transition shadow-lg">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded border ${s.badgeColor}">
+                                    ${s.typeTag}
+                                </span>
+                                <span class="text-[10px] font-semibold text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">${s.feature}</span>
+                            </div>
+                            <h3 class="font-bold text-white text-base">${s.title}</h3>
+                            <p class="text-xs font-semibold text-slate-400 mt-1">📍 ${s.location}</p>
+                            <p class="text-xs text-slate-300 mt-3 leading-relaxed">${s.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
         function renderEvents() {
             const grid = document.getElementById('events-grid');
             grid.innerHTML = '';
 
             let filtered = events.filter(e => {
-                if (activeEventFilter === 'gigs') return e.type === 'gigs';
-                if (activeEventFilter === 'family') return e.type === 'family';
-                if (activeContext === 'rainy') return e.venue.includes('Indoor') || e.type === 'gigs';
-                return true;
+                if (currentCategory === 'all') return true;
+                return e.category === currentCategory || currentCategory === 'events';
             });
 
             filtered.forEach(e => {
@@ -272,7 +310,7 @@
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-3">
                                 <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-brand-600 border border-slate-800 px-2.5 py-0.5 rounded-full">
-                                    ${e.type === 'gigs' ? '🎸 Live Music' : '🎈 Community'}
+                                    ${e.price === 0 ? 'FREE COMMUNITY EVENT' : 'FAIR TICKET EVENT'}
                                 </span>
                                 <span class="text-xs font-bold ${e.price === 0 ? 'text-emerald-400' : 'text-white'}">
                                     ${e.price === 0 ? 'FREE ENTRY' : '£' + e.price.toFixed(2)}
@@ -287,9 +325,9 @@
                             <span class="text-xs font-mono text-slate-400">🕒 ${e.date}</span>
                             ${e.isTicketed ? 
                                 `<button onclick="openTicketModal(${e.id})" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-lg shadow-emerald-600/20">
-                                    Get Ticket (No Fees) →
+                                    Get Ticket (£0 Fees) →
                                 </button>` :
-                                `<span class="text-xs text-slate-500 font-medium">No Ticket Needed</span>`
+                                `<span class="text-xs text-slate-500 font-medium">Free Walk-in</span>`
                             }
                         </div>
                     </div>
@@ -297,22 +335,47 @@
             });
         }
 
-        function renderDirectory() {
-            const grid = document.getElementById('card-grid');
-            grid.innerHTML = '';
-            listings.forEach(item => {
-                grid.innerHTML += `
-                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between gap-2 mb-2">
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${item.badgeColor}">${item.tag}</span>
-                                <span class="text-xs text-amber-400 font-semibold">★ ${item.rating}</span>
-                            </div>
-                            <h3 class="font-bold text-white text-base">${item.title}</h3>
-                            <p class="text-xs text-slate-300 mt-2">${item.desc}</p>
-                        </div>
-                    </div>
-                `;
+        function filterCategory(cat) {
+            currentCategory = cat;
+            ['all', 'play', 'cafes', 'events', 'retail'].forEach(c => {
+                const btn = document.getElementById(`cat-${c}`);
+                if (btn) {
+                    btn.className = (c === cat)
+                        ? "px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-md"
+                        : "px-4 py-2 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap";
+                }
+            });
+            renderDaytimeSpots();
+            renderEvents();
+        }
+
+        // Context Switcher Simulated Logic
+        function updateContext(mode) {
+            const title = document.getElementById('context-title');
+            const desc = document.getElementById('context-desc');
+            const icon = document.getElementById('context-icon');
+
+            if (mode === 'rainy') {
+                icon.innerText = '🌧️';
+                title.innerText = 'Rainy Day in Carlisle';
+                desc.innerText = 'Automatically highlighting indoor soft play areas, covered markets, and cozy cafés.';
+                filterCategory('play');
+            } else if (mode === 'dining') {
+                icon.innerText = '☕';
+                title.innerText = 'Daytime Coffee & Food Specials';
+                desc.innerText = 'Showing independent bakery offers, lunch deals, and family-friendly spots.';
+                filterCategory('cafes');
+            } else {
+                icon.innerText = '☀️';
+                title.innerText = 'Clear Skies in Carlisle (18°C)';
+                desc.innerText = 'Showing outdoor parks, garden cafés, and daytime community activities.';
+                filterCategory('all');
+            }
+
+            ['sunny', 'rainy', 'dining'].forEach(m => {
+                document.getElementById(`btn-${m}`).className = (m === mode) 
+                    ? "px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-600 text-white transition"
+                    : "px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
             });
         }
 
@@ -342,29 +405,9 @@
             document.getElementById('modal-success').classList.remove('hidden');
         }
 
-        function updateContext(mode) {
-            activeContext = mode;
-            ['sunny', 'rainy', 'dining'].forEach(m => {
-                document.getElementById(`btn-${m}`).className = (m === mode) 
-                    ? "px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-600 text-white transition"
-                    : "px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
-            });
-            renderEvents();
-        }
-
-        function filterEvents(type) {
-            activeEventFilter = type;
-            ['all', 'gigs', 'family'].forEach(t => {
-                document.getElementById(`ev-${t}`).className = (t === type) 
-                    ? "px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-600 text-white transition"
-                    : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
-            });
-            renderEvents();
-        }
-
         window.onload = () => {
+            renderDaytimeSpots();
             renderEvents();
-            renderDirectory();
         }
     </script>
 </body>
