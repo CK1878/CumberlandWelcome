@@ -62,15 +62,15 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="alert('Submission form opens')" class="text-xs font-bold font-display tracking-wide bg-gradient-to-r from-brand-600 to-sky-500 hover:from-brand-500 hover:to-sky-400 text-white px-3.5 py-2 rounded-xl transition shadow-lg shadow-brand-600/20 active:scale-95">
-                    + Add Spot / Event
+                <button onclick="alert('Submission form opens')" class="text-xs font-bold font-display tracking-wide bg-gradient-to-r from-brand-600 to-sky-500 hover:from-brand-500 hover:to-sky-400 text-white px-3.5 py-2 rounded-xl transition shadow-lg shadow-brand-600/20 active:scale-95 whitespace-nowrap">
+                    + Add Spot
                 </button>
             </div>
         </div>
     </header>
 
     <!-- HERO & AREA SELECTOR -->
-    <section class="relative bg-slate-950 pt-8 pb-10 border-b border-slate-800/80 overflow-hidden">
+    <section class="relative bg-slate-950 pt-6 pb-8 border-b border-slate-800/80 overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-gradient-to-r from-brand-600/10 via-sky-500/10 to-emerald-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
@@ -80,12 +80,12 @@
                 Live Regional Discovery Across Cumberland
             </div>
 
-            <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
+            <h1 class="text-2xl sm:text-4xl font-display font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
                 Discover Independent Spots, Cafés & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">Community Events.</span>
             </h1>
 
             <!-- SEARCH BAR COMPONENT -->
-            <div class="mt-6 max-w-xl mx-auto relative">
+            <div class="mt-5 max-w-xl mx-auto relative">
                 <div class="relative flex items-center">
                     <span class="absolute left-4 text-slate-400 text-sm">🔍</span>
                     <input 
@@ -93,20 +93,20 @@
                         id="search-input" 
                         oninput="handleSearch()"
                         placeholder="Search 'coffee', 'rain', 'kids', 'umbrella', 'bake'..." 
-                        class="w-full bg-slate-900/90 border border-slate-800 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-slate-100 text-xs sm:text-sm rounded-2xl pl-10 pr-10 py-3.5 outline-none transition shadow-inner placeholder:text-slate-500"
+                        class="w-full bg-slate-900/90 border border-slate-800 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-slate-100 text-xs sm:text-sm rounded-2xl pl-10 pr-10 py-3 outline-none transition shadow-inner placeholder:text-slate-500"
                     />
                     <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-4 text-slate-400 hover:text-white text-xs font-bold">✕</button>
                 </div>
             </div>
 
-            <!-- Multi-Town Selector -->
-            <div class="mt-6 flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1">
-                <span class="text-xs font-bold text-slate-400 mr-1 uppercase tracking-wider">Area:</span>
-                <button onclick="selectTown('carlisle')" id="town-carlisle" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20">Carlisle</button>
-                <button onclick="selectTown('keswick')" id="town-keswick" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Keswick</button>
-                <button onclick="selectTown('penrith')" id="town-penrith" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Penrith</button>
-                <button onclick="selectTown('whitehaven')" id="town-whitehaven" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Whitehaven</button>
-                <button onclick="selectTown('workington')" id="town-workington" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Workington</button>
+            <!-- FIXED MULTI-TOWN SELECTOR (NO LONGER CLIPPED) -->
+            <div class="mt-6 flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar py-1 px-2">
+                <span class="text-xs font-bold text-slate-400 mr-1 uppercase tracking-wider shrink-0">Area:</span>
+                <button onclick="selectTown('carlisle')" id="town-carlisle" class="shrink-0 px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20">Carlisle</button>
+                <button onclick="selectTown('keswick')" id="town-keswick" class="shrink-0 px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Keswick</button>
+                <button onclick="selectTown('penrith')" id="town-penrith" class="shrink-0 px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Penrith</button>
+                <button onclick="selectTown('whitehaven')" id="town-whitehaven" class="shrink-0 px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Whitehaven</button>
+                <button onclick="selectTown('workington')" id="town-workington" class="shrink-0 px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Workington</button>
             </div>
         </div>
     </section>
@@ -123,7 +123,7 @@
                 <button onclick="filterCategory('events')" id="cat-events" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🎟️ Events & Passes</button>
             </div>
 
-            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800/80 self-end sm:self-auto">
+            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800/80 self-end sm:self-auto shrink-0">
                 <button onclick="toggleView('list')" id="view-btn-list" class="px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition">📋 List</button>
                 <button onclick="toggleView('map')" id="view-btn-map" class="px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition">🗺️ Map View</button>
             </div>
@@ -151,12 +151,15 @@
                     {
                         id: 1,
                         title: "Castle Street Bakehouse",
+                        logo: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=100&auto=format&fit=crop&q=80",
+                        image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&auto=format&fit=crop&q=80",
                         category: "cafes",
                         tags: ["coffee", "bakery", "sourdough", "cake", "cinnamon buns", "indoor"],
                         isFeatured: true,
                         location: "Historic Quarter, Carlisle",
                         desc: "Specialty Cumbrian roasted coffee, artisan sourdough, and fresh daily traybakes.",
                         socialUpdate: "🥐 Fresh sourdough loaves & cinnamon buns just out of the oven!",
+                        socialImage: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=80",
                         socialTime: "1 hour ago via Instagram",
                         lat: 54.896, lng: -2.938,
                         isTicketed: false
@@ -164,12 +167,15 @@
                     {
                         id: 2,
                         title: "Bruce & Luke's Coffee Hub",
+                        logo: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=100&auto=format&fit=crop&q=80",
+                        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&auto=format&fit=crop&q=80",
                         category: "cafes",
                         tags: ["coffee", "espresso", "donuts", "takeaway", "drinks"],
                         isFeatured: true,
                         location: "Devonshire Street, Carlisle",
                         desc: "Famous local coffee roasters serving espresso shots, iced lattes, and artisan donuts.",
-                        socialUpdate: "☕ New single-origin beans available on espresso today!",
+                        socialUpdate: "☕ New single-origin Ethiopian beans on espresso today!",
+                        socialImage: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=500&auto=format&fit=crop&q=80",
                         socialTime: "3 hours ago via Instagram",
                         lat: 54.892, lng: -2.932,
                         isTicketed: false
@@ -177,29 +183,19 @@
                     {
                         id: 3,
                         title: "Kids Clay & Pottery Workshop",
+                        logo: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=100&auto=format&fit=crop&q=80",
+                        image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&auto=format&fit=crop&q=80",
                         category: "play",
                         tags: ["kids", "pottery", "crafts", "family", "indoor", "rain", "umbrella"],
                         isFeatured: false,
                         location: "Abbey Street Hub, Carlisle",
                         desc: "Guided 45-minute indoor clay crafting session designed for children and young families.",
                         socialUpdate: null,
+                        socialImage: null,
                         lat: 54.894, lng: -2.936,
                         isTicketed: true,
                         price: 6.00,
                         date: "Saturday • 10:30 AM"
-                    },
-                    {
-                        id: 4,
-                        title: "The Thin White Duke",
-                        category: "cafes",
-                        tags: ["food", "drinks", "bar", "coffee", "lunch", "indoor"],
-                        isFeatured: false,
-                        location: "Devonshire Street, Carlisle",
-                        desc: "Vibrant city-center eatery serving craft beers, artisan lunches, and specialty teas.",
-                        socialUpdate: "🍔 Lunch special: Pulled brisket flatbreads served from 12pm.",
-                        socialTime: "Yesterday via Facebook",
-                        lat: 54.891, lng: -2.931,
-                        isTicketed: false
                     }
                 ]
             },
@@ -210,50 +206,22 @@
                     {
                         id: 5,
                         title: "Kat's Kitchen",
+                        logo: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=100&auto=format&fit=crop&q=80",
+                        image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80",
                         category: "cafes",
                         tags: ["coffee", "vegan", "cake", "lunch", "indoor", "rain"],
                         isFeatured: true,
                         location: "Lake Road, Keswick",
                         desc: "Cozy riverside plant-based café serving fresh cakes, soups, and fairtrade coffee.",
                         socialUpdate: "🍲 Warm up out of the rain with our homemade lentil & coriander soup!",
+                        socialImage: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&auto=format&fit=crop&q=80",
                         socialTime: "40 mins ago via Facebook",
                         lat: 54.599, lng: -3.136,
                         isTicketed: false
-                    },
-                    {
-                        id: 6,
-                        title: "Theatre by the Lake",
-                        category: "events",
-                        tags: ["theater", "shows", "events", "indoor", "rain", "umbrella", "culture"],
-                        isFeatured: false,
-                        location: "Derwentwater Shores, Keswick",
-                        desc: "Cumbria's leading professional theater hosting live drama, music, and local art.",
-                        socialUpdate: null,
-                        lat: 54.595, lng: -3.141,
-                        isTicketed: true,
-                        price: 18.00,
-                        date: "Tonight • 7:30 PM"
                     }
                 ]
             },
-            penrith: { 
-                name: "Penrith", 
-                lat: 54.664, lng: -2.753, 
-                items: [
-                    {
-                        id: 7,
-                        title: "Angel Lane Bites & Coffee",
-                        category: "cafes",
-                        tags: ["coffee", "bakes", "sandwich", "lunch", "indoor"],
-                        isFeatured: false,
-                        location: "Angel Lane, Penrith",
-                        desc: "Family-run baker and coffee shop famous for Cumbrian shortbread and hot toasties.",
-                        socialUpdate: null,
-                        lat: 54.665, lng: -2.754,
-                        isTicketed: false
-                    }
-                ] 
-            },
+            penrith: { name: "Penrith", lat: 54.664, lng: -2.753, items: [] },
             whitehaven: { name: "Whitehaven", lat: 54.548, lng: -3.587, items: [] },
             workington: { name: "Workington", lat: 54.643, lng: -3.543, items: [] }
         };
@@ -270,12 +238,10 @@
             listContainer.innerHTML = '';
 
             const items = townData[currentTown].items.filter(item => {
-                // Category Filter
                 const categoryMatches = (currentCategory === 'all') ||
                                         (currentCategory === 'events' && item.isTicketed) ||
                                         (item.category === currentCategory);
 
-                // Search Filter
                 const query = currentSearchQuery.toLowerCase().trim();
                 const searchMatches = !query || 
                     item.title.toLowerCase().includes(query) ||
@@ -296,140 +262,46 @@
 
             items.forEach(item => {
                 listContainer.innerHTML += `
-                    <div class="bg-slate-900/90 border ${item.isFeatured ? 'border-sky-500/40 ring-1 ring-sky-500/20' : 'border-slate-800/80'} rounded-2xl p-6 flex flex-col justify-between shadow-xl transition hover:border-slate-700">
-                        <div>
-                            <div class="flex items-center justify-between gap-2 mb-3">
-                                ${item.isFeatured ? '<span class="text-[10px] font-display font-bold px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 tracking-wider">FEATURED PARTNER</span>' : '<span class="text-[10px] font-display font-bold px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-800">INDEPENDENT</span>'}
-                                <button onclick="openDirections(${item.lat}, ${item.lng}, '${item.title}')" class="text-[11px] font-bold text-sky-400 hover:text-sky-300 transition flex items-center gap-1">📍 Route →</button>
-                            </div>
+                    <div class="bg-slate-900/90 border ${item.isFeatured ? 'border-sky-500/40 ring-1 ring-sky-500/20' : 'border-slate-800/80'} rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl transition hover:border-slate-700">
+                        
+                        <!-- CARD HERO IMAGE -->
+                        <div class="relative h-44 w-full overflow-hidden bg-slate-950">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition hover:scale-105 duration-500" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                             
-                            <h3 class="font-display font-bold text-white text-lg tracking-tight">${item.title}</h3>
-                            <p class="text-xs font-medium text-slate-400 mt-0.5">${item.location}</p>
-                            <p class="text-xs text-slate-300 mt-3 leading-relaxed">${item.desc}</p>
+                            <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+                                ${item.isFeatured ? '<span class="text-[9px] font-display font-bold px-2.5 py-1 rounded-full bg-slate-950/90 backdrop-blur-md text-sky-400 border border-sky-500/30 tracking-wider">FEATURED</span>' : '<span class="text-[9px] font-display font-bold px-2.5 py-1 rounded-full bg-slate-950/90 backdrop-blur-md text-slate-300 border border-slate-800">INDEPENDENT</span>'}
+                                <button onclick="openDirections(${item.lat}, ${item.lng}, '${item.title}')" class="text-[10px] font-bold bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-full text-sky-400 hover:text-white transition border border-slate-800">📍 Route →</button>
+                            </div>
+                        </div>
 
-                            ${item.socialUpdate ? `
-                                <div class="mt-4 p-3.5 rounded-xl bg-slate-950/80 border border-sky-500/20 relative overflow-hidden">
-                                    <div class="flex items-center gap-1.5 mb-1">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        <span class="text-[9px] font-mono font-bold text-sky-400 uppercase tracking-wider">LIVE FEED UPDATE</span>
+                        <!-- CARD BODY -->
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <img src="${item.logo}" alt="${item.title} Logo" class="w-8 h-8 rounded-full border border-slate-700 object-cover shadow-md" />
+                                    <div>
+                                        <h3 class="font-display font-bold text-white text-base tracking-tight leading-snug">${item.title}</h3>
+                                        <p class="text-[11px] font-medium text-slate-400">${item.location}</p>
                                     </div>
-                                    <p class="text-xs text-slate-200 font-medium leading-normal">"${item.socialUpdate}"</p>
-                                    <span class="text-[9px] text-slate-500 font-mono mt-1.5 block">${item.socialTime}</span>
                                 </div>
-                            ` : ''}
-                        </div>
 
-                        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                            ${item.isTicketed ? `
-                                <div>
-                                    <span class="text-[10px] font-mono text-slate-400 block">ENTRY PASS</span>
-                                    <span class="text-sm font-display font-extrabold text-white">£${item.price.toFixed(2)}</span>
-                                </div>
-                                <button onclick="alert('Demo Checkout initialized')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-display font-bold px-4 py-2 rounded-xl transition shadow-lg shadow-emerald-600/20 active:scale-95">
-                                    Get Pass (£0 Admin Fee)
-                                </button>
-                            ` : `
-                                <span class="text-xs text-slate-400 font-medium">Free Entry / Drop-in</span>
-                                <button onclick="openDirections(${item.lat}, ${item.lng}, '${item.title}')" class="text-xs font-display font-bold text-slate-200 hover:text-white transition">Visit Spot →</button>
-                            `}
-                        </div>
-                    </div>
-                `;
-            });
-        }
+                                <p class="text-xs text-slate-300 mt-2 leading-relaxed">${item.desc}</p>
 
-        function handleSearch() {
-            const input = document.getElementById('search-input');
-            const clearBtn = document.getElementById('clear-search');
-            currentSearchQuery = input.value;
-            
-            if (currentSearchQuery.length > 0) {
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
-            render();
-        }
+                                ${item.socialUpdate ? `
+                                    <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-sky-500/20 relative overflow-hidden">
+                                        <div class="flex items-center gap-1.5 mb-2">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                            <span class="text-[9px] font-mono font-bold text-sky-400 uppercase tracking-wider">LIVE INSTAGRAM FEED</span>
+                                        </div>
+                                        
+                                        ${item.socialImage ? `
+                                            <div class="mb-2.5 h-32 w-full rounded-lg overflow-hidden border border-slate-800">
+                                                <img src="${item.socialImage}" alt="Feed Post" class="w-full h-full object-cover" />
+                                            </div>
+                                        ` : ''}
 
-        function clearSearch() {
-            const input = document.getElementById('search-input');
-            const clearBtn = document.getElementById('clear-search');
-            input.value = '';
-            currentSearchQuery = '';
-            clearBtn.classList.add('hidden');
-            render();
-        }
-
-        function openDirections(lat, lng, name) {
-            const isApple = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const destination = encodeURIComponent(name);
-            const url = isApple 
-                ? `maps://maps.apple.com/?daddr=${lat},${lng}&q=${destination}`
-                : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${destination}`;
-            window.open(url, '_blank');
-        }
-
-        function selectTown(key) {
-            currentTown = key;
-            ['carlisle', 'keswick', 'penrith', 'whitehaven', 'workington'].forEach(k => {
-                document.getElementById(`town-${k}`).className = (k === key)
-                    ? "px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20"
-                    : "px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition";
-            });
-            render();
-            if (currentView === 'map') updateMap();
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            ['all', 'cafes', 'play', 'events'].forEach(c => {
-                document.getElementById(`cat-${c}`).className = (c === cat)
-                    ? "px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white whitespace-nowrap shadow-md"
-                    : "px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap";
-            });
-            render();
-        }
-
-        function toggleView(view) {
-            currentView = view;
-            const listWrap = document.getElementById('list-wrapper');
-            const mapWrap = document.getElementById('map-wrapper');
-
-            if (view === 'map') {
-                listWrap.classList.add('hidden');
-                mapWrap.classList.remove('hidden');
-                document.getElementById('view-btn-map').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition";
-                document.getElementById('view-btn-list').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition";
-                setTimeout(() => { updateMap(); }, 150);
-            } else {
-                mapWrap.classList.add('hidden');
-                listWrap.classList.remove('hidden');
-                document.getElementById('view-btn-list').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition";
-                document.getElementById('view-btn-map').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition";
-            }
-        }
-
-        function updateMap() {
-            const data = townData[currentTown];
-            if (!map) {
-                map = L.map('map-container').setView([data.lat, data.lng], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-            } else {
-                map.setView([data.lat, data.lng], 13);
-            }
-
-            mapMarkers.forEach(m => map.removeLayer(m));
-            mapMarkers = [];
-
-            data.items.forEach(item => {
-                const marker = L.marker([item.lat, item.lng]).addTo(map)
-                    .bindPopup(`<b style="color:#000;">${item.title}</b><br/><span style="color:#555;font-size:11px;">${item.location}</span>`);
-                mapMarkers.push(marker);
-            });
-            map.invalidateSize();
-        }
-
-        window.onload = () => { render(); };
-    </script>
-</body>
-</html>
+                                        <p class="text-xs text-slate-200 font-medium leading-normal">"${item.socialUpdate}"</p>
+                                        <span class="text-[9px] text-slate-500 font-mono mt-1.5 block">${item.socialTime}</span>
+                                    </div>
+                                ` : ''}
