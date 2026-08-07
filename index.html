@@ -8,7 +8,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Modern Display Fonts: Plus Jakarta Sans (Headings) + Inter (Body) -->
+    <!-- Modern Display Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
@@ -62,7 +62,7 @@
             </div>
 
             <div class="flex items-center gap-2">
-                <button onclick="openSubmissionModal()" class="text-xs font-bold font-display tracking-wide bg-gradient-to-r from-brand-600 to-sky-500 hover:from-brand-500 hover:to-sky-400 text-white px-3.5 py-2 rounded-xl transition shadow-lg shadow-brand-600/20 active:scale-95">
+                <button onclick="alert('Submission form opens')" class="text-xs font-bold font-display tracking-wide bg-gradient-to-r from-brand-600 to-sky-500 hover:from-brand-500 hover:to-sky-400 text-white px-3.5 py-2 rounded-xl transition shadow-lg shadow-brand-600/20 active:scale-95">
                     + Add Spot / Event
                 </button>
             </div>
@@ -70,8 +70,7 @@
     </header>
 
     <!-- HERO & AREA SELECTOR -->
-    <section class="relative bg-slate-950 pt-10 pb-12 border-b border-slate-800/80 overflow-hidden">
-        <!-- Ambient background glow -->
+    <section class="relative bg-slate-950 pt-8 pb-10 border-b border-slate-800/80 overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-gradient-to-r from-brand-600/10 via-sky-500/10 to-emerald-500/10 blur-3xl pointer-events-none"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
@@ -84,12 +83,24 @@
             <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
                 Discover Independent Spots, Cafés & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">Community Events.</span>
             </h1>
-            <p class="text-xs sm:text-base text-slate-400 mt-3 max-w-xl mx-auto font-medium">
-                Live updates direct from local business feeds across Carlisle, Keswick, Penrith, and West Cumbria.
-            </p>
+
+            <!-- SEARCH BAR COMPONENT -->
+            <div class="mt-6 max-w-xl mx-auto relative">
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-slate-400 text-sm">🔍</span>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        oninput="handleSearch()"
+                        placeholder="Search 'coffee', 'rain', 'kids', 'umbrella', 'bake'..." 
+                        class="w-full bg-slate-900/90 border border-slate-800 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-slate-100 text-xs sm:text-sm rounded-2xl pl-10 pr-10 py-3.5 outline-none transition shadow-inner placeholder:text-slate-500"
+                    />
+                    <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-4 text-slate-400 hover:text-white text-xs font-bold">✕</button>
+                </div>
+            </div>
 
             <!-- Multi-Town Selector -->
-            <div class="mt-8 flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <div class="mt-6 flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1">
                 <span class="text-xs font-bold text-slate-400 mr-1 uppercase tracking-wider">Area:</span>
                 <button onclick="selectTown('carlisle')" id="town-carlisle" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20">Carlisle</button>
                 <button onclick="selectTown('keswick')" id="town-keswick" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Keswick</button>
@@ -141,6 +152,7 @@
                         id: 1,
                         title: "Castle Street Bakehouse",
                         category: "cafes",
+                        tags: ["coffee", "bakery", "sourdough", "cake", "cinnamon buns", "indoor"],
                         isFeatured: true,
                         location: "Historic Quarter, Carlisle",
                         desc: "Specialty Cumbrian roasted coffee, artisan sourdough, and fresh daily traybakes.",
@@ -151,16 +163,43 @@
                     },
                     {
                         id: 2,
+                        title: "Bruce & Luke's Coffee Hub",
+                        category: "cafes",
+                        tags: ["coffee", "espresso", "donuts", "takeaway", "drinks"],
+                        isFeatured: true,
+                        location: "Devonshire Street, Carlisle",
+                        desc: "Famous local coffee roasters serving espresso shots, iced lattes, and artisan donuts.",
+                        socialUpdate: "☕ New single-origin beans available on espresso today!",
+                        socialTime: "3 hours ago via Instagram",
+                        lat: 54.892, lng: -2.932,
+                        isTicketed: false
+                    },
+                    {
+                        id: 3,
                         title: "Kids Clay & Pottery Workshop",
                         category: "play",
+                        tags: ["kids", "pottery", "crafts", "family", "indoor", "rain", "umbrella"],
                         isFeatured: false,
                         location: "Abbey Street Hub, Carlisle",
-                        desc: "Guided 45-minute clay crafting session designed for children and young families.",
+                        desc: "Guided 45-minute indoor clay crafting session designed for children and young families.",
                         socialUpdate: null,
                         lat: 54.894, lng: -2.936,
                         isTicketed: true,
                         price: 6.00,
                         date: "Saturday • 10:30 AM"
+                    },
+                    {
+                        id: 4,
+                        title: "The Thin White Duke",
+                        category: "cafes",
+                        tags: ["food", "drinks", "bar", "coffee", "lunch", "indoor"],
+                        isFeatured: false,
+                        location: "Devonshire Street, Carlisle",
+                        desc: "Vibrant city-center eatery serving craft beers, artisan lunches, and specialty teas.",
+                        socialUpdate: "🍔 Lunch special: Pulled brisket flatbreads served from 12pm.",
+                        socialTime: "Yesterday via Facebook",
+                        lat: 54.891, lng: -2.931,
+                        isTicketed: false
                     }
                 ]
             },
@@ -169,26 +208,59 @@
                 lat: 54.601, lng: -3.135,
                 items: [
                     {
-                        id: 3,
-                        title: "Hope Park Family Hub",
-                        category: "play",
+                        id: 5,
+                        title: "Kat's Kitchen",
+                        category: "cafes",
+                        tags: ["coffee", "vegan", "cake", "lunch", "indoor", "rain"],
                         isFeatured: true,
-                        location: "Hope Park, Keswick",
-                        desc: "Pitch & putt, crazy golf, and parkside refreshment kiosk near Derwentwater.",
-                        socialUpdate: "☀️ Sunny skies over Derwentwater today! Kiosk open for ice creams until 5 PM.",
-                        socialTime: "30 mins ago via Facebook",
-                        lat: 54.598, lng: -3.138,
+                        location: "Lake Road, Keswick",
+                        desc: "Cozy riverside plant-based café serving fresh cakes, soups, and fairtrade coffee.",
+                        socialUpdate: "🍲 Warm up out of the rain with our homemade lentil & coriander soup!",
+                        socialTime: "40 mins ago via Facebook",
+                        lat: 54.599, lng: -3.136,
                         isTicketed: false
+                    },
+                    {
+                        id: 6,
+                        title: "Theatre by the Lake",
+                        category: "events",
+                        tags: ["theater", "shows", "events", "indoor", "rain", "umbrella", "culture"],
+                        isFeatured: false,
+                        location: "Derwentwater Shores, Keswick",
+                        desc: "Cumbria's leading professional theater hosting live drama, music, and local art.",
+                        socialUpdate: null,
+                        lat: 54.595, lng: -3.141,
+                        isTicketed: true,
+                        price: 18.00,
+                        date: "Tonight • 7:30 PM"
                     }
                 ]
             },
-            penrith: { name: "Penrith", lat: 54.664, lng: -2.753, items: [] },
+            penrith: { 
+                name: "Penrith", 
+                lat: 54.664, lng: -2.753, 
+                items: [
+                    {
+                        id: 7,
+                        title: "Angel Lane Bites & Coffee",
+                        category: "cafes",
+                        tags: ["coffee", "bakes", "sandwich", "lunch", "indoor"],
+                        isFeatured: false,
+                        location: "Angel Lane, Penrith",
+                        desc: "Family-run baker and coffee shop famous for Cumbrian shortbread and hot toasties.",
+                        socialUpdate: null,
+                        lat: 54.665, lng: -2.754,
+                        isTicketed: false
+                    }
+                ] 
+            },
             whitehaven: { name: "Whitehaven", lat: 54.548, lng: -3.587, items: [] },
             workington: { name: "Workington", lat: 54.643, lng: -3.543, items: [] }
         };
 
         let currentTown = 'carlisle';
         let currentCategory = 'all';
+        let currentSearchQuery = '';
         let currentView = 'list';
         let map = null;
         let mapMarkers = [];
@@ -198,13 +270,27 @@
             listContainer.innerHTML = '';
 
             const items = townData[currentTown].items.filter(item => {
-                if (currentCategory === 'all') return true;
-                if (currentCategory === 'events') return item.isTicketed;
-                return item.category === currentCategory;
+                // Category Filter
+                const categoryMatches = (currentCategory === 'all') ||
+                                        (currentCategory === 'events' && item.isTicketed) ||
+                                        (item.category === currentCategory);
+
+                // Search Filter
+                const query = currentSearchQuery.toLowerCase().trim();
+                const searchMatches = !query || 
+                    item.title.toLowerCase().includes(query) ||
+                    item.desc.toLowerCase().includes(query) ||
+                    item.location.toLowerCase().includes(query) ||
+                    (item.tags && item.tags.some(tag => tag.toLowerCase().includes(query)));
+
+                return categoryMatches && searchMatches;
             });
 
             if (items.length === 0) {
-                listContainer.innerHTML = `<div class="col-span-3 py-16 text-center text-slate-500 font-medium text-xs">No active spots listed in ${townData[currentTown].name} for this category yet.</div>`;
+                const emptyMsg = currentSearchQuery 
+                    ? `No results matching "${currentSearchQuery}" in ${townData[currentTown].name}.`
+                    : `No active spots listed in ${townData[currentTown].name} for this category yet.`;
+                listContainer.innerHTML = `<div class="col-span-3 py-16 text-center text-slate-500 font-medium text-xs">${emptyMsg}</div>`;
                 return;
             }
 
@@ -250,6 +336,28 @@
                     </div>
                 `;
             });
+        }
+
+        function handleSearch() {
+            const input = document.getElementById('search-input');
+            const clearBtn = document.getElementById('clear-search');
+            currentSearchQuery = input.value;
+            
+            if (currentSearchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            render();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('search-input');
+            const clearBtn = document.getElementById('clear-search');
+            input.value = '';
+            currentSearchQuery = '';
+            clearBtn.classList.add('hidden');
+            render();
         }
 
         function openDirections(lat, lng, name) {
