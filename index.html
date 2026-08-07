@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore CUMBRIA™ | Regional Engine, Maps & Fair Ticketing</title>
+    <title>Cumbria Local | Independent Cafés, Live Events & Area Hubs</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Leaflet Open-Source Mapping Library (Zero API Cost) -->
+    <!-- Modern Display Fonts: Plus Jakarta Sans (Headings) + Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet Open-Source Mapping Library -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -17,11 +21,15 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif']
+                    },
                     colors: {
                         brand: {
                             50: '#f0f9ff',
                             100: '#e0f2fe',
+                            500: '#0ea5e9',
                             600: '#0284c7',
                             800: '#075985',
                             900: '#0c4a6e',
@@ -35,366 +43,243 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         #map-container { height: 420px; width: 100%; border-radius: 1rem; z-index: 1; }
-        .leaflet-tile { filter: brightness(0.7) invert(1) contrast(1.2) hue-rotate(200deg); }
+        .leaflet-tile { filter: brightness(0.75) invert(1) contrast(1.2) hue-rotate(190deg); }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-brand-600 selection:text-white pb-24">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-brand-600 selection:text-white pb-24">
 
-    <!-- 1. HEADER & CONTROLS -->
-    <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="h-9 w-9 bg-gradient-to-tr from-brand-600 to-emerald-400 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg">
+                <div class="h-9 w-9 bg-gradient-to-tr from-brand-600 via-sky-500 to-emerald-400 rounded-xl flex items-center justify-center font-display font-black text-white text-xl shadow-lg shadow-brand-600/20">
                     C
                 </div>
                 <div>
-                    <span class="font-extrabold tracking-tight text-white text-lg">EXPLORE<span class="text-brand-600">CUMBRIA</span></span>
-                    <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold bg-emerald-950 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800/50">CUMBERLAND ENGINE</span>
+                    <span class="font-display font-black tracking-tight text-white text-lg">CUMBRIA<span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">LOCAL</span></span>
+                    <span class="hidden sm:inline-block ml-2 text-[10px] font-bold tracking-wider bg-emerald-950/80 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800/60 uppercase">Cumberland Engine</span>
                 </div>
             </div>
 
-            <!-- Context Controls -->
-            <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
-                <button onclick="updateContext('sunny')" id="btn-sunny" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-600 text-white transition">☀️ Sun</button>
-                <button onclick="updateContext('rainy')" id="btn-rainy" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🌧️ Rain</button>
-                <button onclick="updateContext('dining')" id="btn-dining" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">☕ Cafés</button>
+            <div class="flex items-center gap-2">
+                <button onclick="openSubmissionModal()" class="text-xs font-bold font-display tracking-wide bg-gradient-to-r from-brand-600 to-sky-500 hover:from-brand-500 hover:to-sky-400 text-white px-3.5 py-2 rounded-xl transition shadow-lg shadow-brand-600/20 active:scale-95">
+                    + Add Spot / Event
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- 2. HERO & TOWN SELECTOR -->
-    <section class="relative bg-slate-950 pt-8 pb-12 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <!-- HERO & AREA SELECTOR -->
+    <section class="relative bg-slate-950 pt-10 pb-12 border-b border-slate-800/80 overflow-hidden">
+        <!-- Ambient background glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-gradient-to-r from-brand-600/10 via-sky-500/10 to-emerald-500/10 blur-3xl pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
             
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium mb-4">
-                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-                Hyper-Local Discovery Across Cumberland
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-sky-400 text-xs font-semibold mb-4 shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Live Regional Discovery Across Cumberland
             </div>
 
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-tight">
-                Live Local Events, Cafés & Fair Tickets. <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-sky-400 to-emerald-400">Zero Social Media Admin Required.</span>
+            <h1 class="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight max-w-3xl mx-auto leading-tight">
+                Discover Independent Spots, Cafés & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">Community Events.</span>
             </h1>
+            <p class="text-xs sm:text-base text-slate-400 mt-3 max-w-xl mx-auto font-medium">
+                Live updates direct from local business feeds across Carlisle, Keswick, Penrith, and West Cumbria.
+            </p>
 
-            <!-- Multi-Town Selector Bar -->
-            <div class="mt-6 flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-2">
-                <span class="text-xs font-semibold text-slate-400 mr-2">📍 Select Area:</span>
-                <button onclick="selectTown('carlisle')" id="town-carlisle" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white border border-brand-500 transition">Carlisle & District</button>
-                <button onclick="selectTown('keswick')" id="town-keswick" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Keswick</button>
-                <button onclick="selectTown('penrith')" id="town-penrith" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Penrith</button>
-                <button onclick="selectTown('whitehaven')" id="town-whitehaven" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Whitehaven</button>
-                <button onclick="selectTown('workington')" id="town-workington" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Workington</button>
+            <!-- Multi-Town Selector -->
+            <div class="mt-8 flex items-center justify-center gap-2 overflow-x-auto no-scrollbar py-1">
+                <span class="text-xs font-bold text-slate-400 mr-1 uppercase tracking-wider">Area:</span>
+                <button onclick="selectTown('carlisle')" id="town-carlisle" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20">Carlisle</button>
+                <button onclick="selectTown('keswick')" id="town-keswick" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Keswick</button>
+                <button onclick="selectTown('penrith')" id="town-penrith" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Penrith</button>
+                <button onclick="selectTown('whitehaven')" id="town-whitehaven" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Whitehaven</button>
+                <button onclick="selectTown('workington')" id="town-workington" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition">Workington</button>
             </div>
         </div>
     </section>
 
-    <!-- 3. MAIN CONTENT DASHBOARD -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- DASHBOARD CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
-        <!-- Dynamic Context Banner -->
-        <div id="context-banner" class="mb-6 p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span id="context-icon" class="text-2xl">☀️</span>
-                <div>
-                    <h3 id="context-title" class="font-bold text-white text-sm">Clear Skies in Carlisle (18°C)</h3>
-                    <p id="context-desc" class="text-xs text-slate-400">Showing outdoor parks, garden cafés, and daytime community activities.</p>
-                </div>
-            </div>
-            <span class="text-[10px] font-mono bg-slate-900 text-emerald-400 px-2 py-1 rounded border border-slate-800">LIVE FEED</span>
-        </div>
-
-        <!-- VIEW TOGGLE & CATEGORY QUICK-FILTERS -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
-            <!-- Category Filters -->
+        <!-- VIEW TOGGLES & FILTERS -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                <button onclick="filterCategory('all')" id="cat-all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-md">🌟 Show All</button>
-                <button onclick="filterCategory('play')" id="cat-play" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🧸 Kids & Soft Play</button>
-                <button onclick="filterCategory('cafes')" id="cat-cafes" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">☕ Cafés & Bakeries</button>
-                <button onclick="filterCategory('events')" id="cat-events" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🎈 Events & Tickets</button>
+                <button onclick="filterCategory('all')" id="cat-all" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white whitespace-nowrap shadow-md">🌟 All Spots</button>
+                <button onclick="filterCategory('cafes')" id="cat-cafes" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">☕ Cafés & Bakes</button>
+                <button onclick="filterCategory('play')" id="cat-play" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🧸 Kids & Family</button>
+                <button onclick="filterCategory('events')" id="cat-events" class="px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap">🎟️ Events & Passes</button>
             </div>
 
-            <!-- Layout Switcher (List vs Interactive Map) -->
-            <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 self-end sm:self-auto">
-                <button onclick="toggleView('list')" id="view-btn-list" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-white transition">📋 List View</button>
-                <button onclick="toggleView('map')" id="view-btn-map" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition">🗺️ Map View</button>
+            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800/80 self-end sm:self-auto">
+                <button onclick="toggleView('list')" id="view-btn-list" class="px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition">📋 List</button>
+                <button onclick="toggleView('map')" id="view-btn-map" class="px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition">🗺️ Map View</button>
             </div>
         </div>
 
-        <!-- MAP CONTAINER (HIDDEN BY DEFAULT, SHOWN IN MAP VIEW) -->
-        <div id="map-wrapper" class="hidden mb-10">
-            <div class="bg-slate-950 p-2 rounded-2xl border border-slate-800 shadow-2xl">
+        <!-- MAP WRAPPER -->
+        <div id="map-wrapper" class="hidden mb-8">
+            <div class="bg-slate-900 p-2 rounded-2xl border border-slate-800 shadow-2xl">
                 <div id="map-container"></div>
-                <div class="p-3 flex items-center justify-between text-xs text-slate-400">
-                    <span>💡 Tap any map marker to see details and launch live Google/Apple directions.</span>
-                    <span class="font-mono text-[10px] text-emerald-400">Leaflet Open Map Engine</span>
-                </div>
             </div>
         </div>
 
-        <!-- LIST CONTAINER -->
-        <div id="list-wrapper">
-            <!-- Daytime Spots Section -->
-            <section class="mb-12">
-                <h2 class="text-xl font-bold text-white tracking-tight mb-4">Independent Places & Daytime Hubs</h2>
-                <div id="daytime-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
-            </section>
-
-            <!-- What's On & Fair Tickets Section -->
-            <section class="mb-14">
-                <div class="border-b border-slate-800 pb-3 mb-6">
-                    <h2 class="text-xl font-bold text-white tracking-tight">What's On & Fair Tickets</h2>
-                    <p class="text-xs text-slate-400 mt-1">Direct box office with £0 exploitative booking fees.</p>
-                </div>
-                <div id="events-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-            </section>
-        </div>
+        <!-- LISTINGS CONTAINER -->
+        <div id="list-wrapper" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
 
     </main>
 
-    <!-- 4. FAIR TICKETING CHECKOUT MODAL -->
-    <div id="ticket-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
-            
-            <div class="mb-4">
-                <span class="text-[10px] font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">NO EXPLOITATIVE FEES</span>
-                <h3 id="modal-event-title" class="text-xl font-bold text-white mt-2">Event Title</h3>
-                <p id="modal-event-venue" class="text-xs text-slate-400">Venue details</p>
-            </div>
-
-            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-4 space-y-2">
-                <div class="flex justify-between text-xs text-slate-300">
-                    <span>Ticket Price:</span>
-                    <span id="modal-ticket-price" class="font-bold text-white">£5.00</span>
-                </div>
-                <div class="flex justify-between text-xs text-slate-300">
-                    <span>Corporate "Admin" Fee:</span>
-                    <span class="font-bold text-emerald-400">£0.00 (Saved £3.50)</span>
-                </div>
-                <div class="border-t border-slate-800 pt-2 flex justify-between text-sm font-bold text-white">
-                    <span>Total Due:</span>
-                    <span id="modal-total-price">£5.00</span>
-                </div>
-            </div>
-
-            <form id="checkout-form" onsubmit="processTicket(event)" class="space-y-3">
-                <div>
-                    <label class="text-[11px] font-semibold text-slate-400 block mb-1">Email for Digital Ticket (No Account Needed):</label>
-                    <input type="email" required placeholder="you@example.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-600">
-                </div>
-
-                <div class="pt-2">
-                    <button type="submit" class="w-full bg-white hover:bg-slate-100 text-slate-950 font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-lg">
-                        <span>Pay</span> / Google Pay — 1-Tap Buy
-                    </button>
-                </div>
-            </form>
-
-            <div id="modal-success" class="hidden text-center py-4">
-                <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-3 border border-emerald-500/30">✓</div>
-                <h4 class="text-lg font-bold text-white">Ticket Delivered!</h4>
-                <p class="text-xs text-slate-400 mt-1">Digital ticket sent to email and ready for door scanning.</p>
-                
-                <div class="mt-4 p-4 bg-white text-slate-950 rounded-xl font-mono text-left text-xs shadow-inner">
-                    <div class="flex justify-between border-b border-slate-200 pb-2 mb-2 font-sans font-bold">
-                        <span>EXPLORE CUMBRIA TICKET</span>
-                        <span class="text-emerald-700">VALID</span>
-                    </div>
-                    <p id="ticket-pass-name" class="font-bold">Event Name</p>
-                    <p class="text-[10px] text-slate-600">Show QR code on arrival</p>
-                    <div class="mt-3 bg-slate-900 text-white p-2 text-center rounded text-sm tracking-widest font-bold">
-                        ||| | |||| || ||| ||||
-                    </div>
-                </div>
-
-                <button onclick="closeModal()" class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2 rounded-xl text-xs transition">Done</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. COMPLETE EMBEDDED JAVASCRIPT ENGINE -->
+    <!-- APPLICATION ENGINE -->
     <script>
-        // Town Data Coordinates & Listings
         const townData = {
             carlisle: {
-                name: "Carlisle & District",
-                lat: 54.891,
-                lng: -2.932,
-                spots: [
-                    { id: 1, title: "Little Explorers Soft Play & Café", category: "play", typeTag: "🧸 Kids & Toddlers", location: "Kingstown, Carlisle", desc: "Dedicated soft play with barista coffee and free parking.", lat: 54.915, lng: -2.945 },
-                    { id: 2, title: "Castle Street Coffee & Bakehouse", category: "cafes", typeTag: "☕ Café & Bakery", location: "Historic Quarter, Carlisle", desc: "Specialty Cumbrian roasted coffee and homemade traybakes.", lat: 54.896, lng: -2.938 },
-                    { id: 3, title: "Abbey Street Artisan Craft Hub", category: "retail", typeTag: "🛍️ Independent Retail", location: "Abbey St, Carlisle", desc: "Co-op gallery featuring local Cumbrian ceramics and handmade gifts.", lat: 54.894, lng: -2.936 }
-                ],
-                events: [
-                    { id: 101, title: "Kids Craft & Clay Pottery Session", venue: "Abbey Street Hub, Carlisle", category: "play", price: 6.00, isTicketed: true, date: "Saturday • 10:30 AM", desc: "Guided 45-minute clay workshop for kids.", lat: 54.894, lng: -2.936 },
-                    { id: 102, title: "Carlisle Producers Market", venue: "Cathedral Green, Carlisle", category: "cafes", price: 0, isTicketed: false, date: "Saturday • 10:00 - 15:00", desc: "Local Cumbrian cheeses, artisan breads, and food trucks.", lat: 54.895, lng: -2.935 },
-                    { id: 103, title: "Live Acoustic Session", venue: "The Cumbrian Tap, Carlisle", category: "events", price: 5.00, isTicketed: true, date: "Tonight • 20:00", desc: "Intimate acoustic set by local songwriters.", lat: 54.892, lng: -2.933 }
+                name: "Carlisle",
+                lat: 54.891, lng: -2.932,
+                items: [
+                    {
+                        id: 1,
+                        title: "Castle Street Bakehouse",
+                        category: "cafes",
+                        isFeatured: true,
+                        location: "Historic Quarter, Carlisle",
+                        desc: "Specialty Cumbrian roasted coffee, artisan sourdough, and fresh daily traybakes.",
+                        socialUpdate: "🥐 Fresh sourdough loaves & cinnamon buns just out of the oven!",
+                        socialTime: "1 hour ago via Instagram",
+                        lat: 54.896, lng: -2.938,
+                        isTicketed: false
+                    },
+                    {
+                        id: 2,
+                        title: "Kids Clay & Pottery Workshop",
+                        category: "play",
+                        isFeatured: false,
+                        location: "Abbey Street Hub, Carlisle",
+                        desc: "Guided 45-minute clay crafting session designed for children and young families.",
+                        socialUpdate: null,
+                        lat: 54.894, lng: -2.936,
+                        isTicketed: true,
+                        price: 6.00,
+                        date: "Saturday • 10:30 AM"
+                    }
                 ]
             },
             keswick: {
                 name: "Keswick",
-                lat: 54.601,
-                lng: -3.135,
-                spots: [
-                    { id: 4, title: "Hope Park Crazy Golf & Café", category: "play", typeTag: "🧸 Family & Outdoors", location: "Hope Park, Keswick", desc: "Family golf, pitch & putt, and parkside café near Derwentwater.", lat: 54.598, lng: -3.138 },
-                    { id: 5, title: "The Little Choc-O-La-Te Café", category: "cafes", typeTag: "☕ Hot Chocolate & Bakes", location: "Main St, Keswick", desc: "Famous artisan hot chocolates and handmade truffles.", lat: 54.601, lng: -3.136 }
-                ],
-                events: [
-                    { id: 104, title: "Derwentwater Outdoor Charity Run", venue: "Theatre by the Lake, Keswick", category: "events", price: 10.00, isTicketed: true, date: "Sunday • 09:30 AM", desc: "Scenic lakeside 5k raising funds for Cumbrian wildlife.", lat: 54.596, lng: -3.141 }
+                lat: 54.601, lng: -3.135,
+                items: [
+                    {
+                        id: 3,
+                        title: "Hope Park Family Hub",
+                        category: "play",
+                        isFeatured: true,
+                        location: "Hope Park, Keswick",
+                        desc: "Pitch & putt, crazy golf, and parkside refreshment kiosk near Derwentwater.",
+                        socialUpdate: "☀️ Sunny skies over Derwentwater today! Kiosk open for ice creams until 5 PM.",
+                        socialTime: "30 mins ago via Facebook",
+                        lat: 54.598, lng: -3.138,
+                        isTicketed: false
+                    }
                 ]
             },
-            penrith: {
-                name: "Penrith",
-                lat: 54.664,
-                lng: -2.753,
-                spots: [
-                    { id: 6, title: "Devonshire Street Bakehouse", category: "cafes", typeTag: "☕ Café & Pastry", location: "Town Centre, Penrith", desc: "Traditional Cumbrian pastries and specialty tea room.", lat: 54.664, lng: -2.753 }
-                ],
-                events: [
-                    { id: 105, title: "Penrith Artisan Food Fair", venue: "Market Square, Penrith", category: "cafes", price: 0, isTicketed: false, date: "Saturday • 10:00", desc: "Regional producers market and hot food stalls.", lat: 54.665, lng: -2.752 }
-                ]
-            },
-            whitehaven: { name: "Whitehaven", lat: 54.548, lng: -3.587, spots: [], events: [] },
-            workington: { name: "Workington", lat: 54.643, lng: -3.543, spots: [], events: [] }
+            penrith: { name: "Penrith", lat: 54.664, lng: -2.753, items: [] },
+            whitehaven: { name: "Whitehaven", lat: 54.548, lng: -3.587, items: [] },
+            workington: { name: "Workington", lat: 54.643, lng: -3.543, items: [] }
         };
 
-        let currentTownKey = 'carlisle';
+        let currentTown = 'carlisle';
         let currentCategory = 'all';
-        let activeContext = 'sunny';
         let currentView = 'list';
         let map = null;
         let mapMarkers = [];
 
-        // Deep Link Navigation Engine (Pushes directly to Apple Maps or Google Maps)
-        function openDirections(lat, lng, venueName) {
+        function render() {
+            const listContainer = document.getElementById('list-wrapper');
+            listContainer.innerHTML = '';
+
+            const items = townData[currentTown].items.filter(item => {
+                if (currentCategory === 'all') return true;
+                if (currentCategory === 'events') return item.isTicketed;
+                return item.category === currentCategory;
+            });
+
+            if (items.length === 0) {
+                listContainer.innerHTML = `<div class="col-span-3 py-16 text-center text-slate-500 font-medium text-xs">No active spots listed in ${townData[currentTown].name} for this category yet.</div>`;
+                return;
+            }
+
+            items.forEach(item => {
+                listContainer.innerHTML += `
+                    <div class="bg-slate-900/90 border ${item.isFeatured ? 'border-sky-500/40 ring-1 ring-sky-500/20' : 'border-slate-800/80'} rounded-2xl p-6 flex flex-col justify-between shadow-xl transition hover:border-slate-700">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                ${item.isFeatured ? '<span class="text-[10px] font-display font-bold px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 tracking-wider">FEATURED PARTNER</span>' : '<span class="text-[10px] font-display font-bold px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-800">INDEPENDENT</span>'}
+                                <button onclick="openDirections(${item.lat}, ${item.lng}, '${item.title}')" class="text-[11px] font-bold text-sky-400 hover:text-sky-300 transition flex items-center gap-1">📍 Route →</button>
+                            </div>
+                            
+                            <h3 class="font-display font-bold text-white text-lg tracking-tight">${item.title}</h3>
+                            <p class="text-xs font-medium text-slate-400 mt-0.5">${item.location}</p>
+                            <p class="text-xs text-slate-300 mt-3 leading-relaxed">${item.desc}</p>
+
+                            ${item.socialUpdate ? `
+                                <div class="mt-4 p-3.5 rounded-xl bg-slate-950/80 border border-sky-500/20 relative overflow-hidden">
+                                    <div class="flex items-center gap-1.5 mb-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        <span class="text-[9px] font-mono font-bold text-sky-400 uppercase tracking-wider">LIVE FEED UPDATE</span>
+                                    </div>
+                                    <p class="text-xs text-slate-200 font-medium leading-normal">"${item.socialUpdate}"</p>
+                                    <span class="text-[9px] text-slate-500 font-mono mt-1.5 block">${item.socialTime}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            ${item.isTicketed ? `
+                                <div>
+                                    <span class="text-[10px] font-mono text-slate-400 block">ENTRY PASS</span>
+                                    <span class="text-sm font-display font-extrabold text-white">£${item.price.toFixed(2)}</span>
+                                </div>
+                                <button onclick="alert('Demo Checkout initialized')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-display font-bold px-4 py-2 rounded-xl transition shadow-lg shadow-emerald-600/20 active:scale-95">
+                                    Get Pass (£0 Admin Fee)
+                                </button>
+                            ` : `
+                                <span class="text-xs text-slate-400 font-medium">Free Entry / Drop-in</span>
+                                <button onclick="openDirections(${item.lat}, ${item.lng}, '${item.title}')" class="text-xs font-display font-bold text-slate-200 hover:text-white transition">Visit Spot →</button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openDirections(lat, lng, name) {
             const isApple = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const destination = encodeURIComponent(venueName);
-            
-            if (isApple) {
-                window.open(`maps://maps.apple.com/?daddr=${lat},${lng}&q=${destination}`, '_blank');
-            } else {
-                window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${destination}`, '_blank');
-            }
+            const destination = encodeURIComponent(name);
+            const url = isApple 
+                ? `maps://maps.apple.com/?daddr=${lat},${lng}&q=${destination}`
+                : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${destination}`;
+            window.open(url, '_blank');
         }
 
-        function renderListings() {
-            const currentData = townData[currentTownKey];
-            const daytimeGrid = document.getElementById('daytime-grid');
-            const eventsGrid = document.getElementById('events-grid');
-
-            daytimeGrid.innerHTML = '';
-            eventsGrid.innerHTML = '';
-
-            // Filter Daytime Spots
-            let filteredSpots = currentData.spots.filter(s => {
-                if (currentCategory === 'all') return true;
-                return s.category === currentCategory;
+        function selectTown(key) {
+            currentTown = key;
+            ['carlisle', 'keswick', 'penrith', 'whitehaven', 'workington'].forEach(k => {
+                document.getElementById(`town-${k}`).className = (k === key)
+                    ? "px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white border border-brand-500 transition shadow-lg shadow-brand-600/20"
+                    : "px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition";
             });
-
-            if (filteredSpots.length === 0) {
-                daytimeGrid.innerHTML = `<p class="text-xs text-slate-500 col-span-3 py-2">No daytime spots currently listed for this category in ${currentData.name}.</p>`;
-            } else {
-                filteredSpots.forEach(s => {
-                    daytimeGrid.innerHTML += `
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-slate-700 transition shadow-lg">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-3">
-                                    <span class="text-[10px] font-bold px-2.5 py-0.5 rounded border bg-brand-500/10 text-brand-400 border-brand-500/20">${s.typeTag}</span>
-                                    <button onclick="openDirections(${s.lat}, ${s.lng}, '${s.title}')" class="text-[10px] font-bold text-sky-400 hover:underline flex items-center gap-1">📍 Navigate →</button>
-                                </div>
-                                <h3 class="font-bold text-white text-base">${s.title}</h3>
-                                <p class="text-xs font-semibold text-slate-400 mt-1">${s.location}</p>
-                                <p class="text-xs text-slate-300 mt-3 leading-relaxed">${s.desc}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            // Filter Events
-            let filteredEvents = currentData.events.filter(e => {
-                if (currentCategory === 'all') return true;
-                return e.category === currentCategory || currentCategory === 'events';
-            });
-
-            if (filteredEvents.length === 0) {
-                eventsGrid.innerHTML = `<p class="text-xs text-slate-500 col-span-3 py-2">No events matching this filter in ${currentData.name}.</p>`;
-            } else {
-                filteredEvents.forEach(e => {
-                    eventsGrid.innerHTML += `
-                        <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-brand-600/50 transition group shadow-xl">
-                            <div>
-                                <div class="flex items-center justify-between gap-2 mb-3">
-                                    <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-brand-600 border border-slate-800 px-2.5 py-0.5 rounded-full">
-                                        ${e.price === 0 ? 'FREE COMMUNITY' : 'FAIR TICKET'}
-                                    </span>
-                                    <span class="text-xs font-bold ${e.price === 0 ? 'text-emerald-400' : 'text-white'}">
-                                        ${e.price === 0 ? 'FREE ENTRY' : '£' + e.price.toFixed(2)}
-                                    </span>
-                                </div>
-                                <h3 class="font-bold text-white text-base group-hover:text-brand-600 transition">${e.title}</h3>
-                                <p class="text-xs text-slate-400 mt-1">📍 ${e.venue}</p>
-                                <p class="text-xs text-slate-300 mt-3 leading-relaxed">${e.desc}</p>
-                            </div>
-
-                            <div class="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
-                                <button onclick="openDirections(${e.lat}, ${e.lng}, '${e.venue}')" class="text-[10px] font-bold text-slate-400 hover:text-white">🗺️ Route</button>
-                                ${e.isTicketed ? 
-                                    `<button onclick="openTicketModal(${e.id})" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-lg shadow-emerald-600/20">
-                                        Get Ticket (£0 Fees) →
-                                    </button>` :
-                                    `<span class="text-xs text-slate-500 font-medium">Free Walk-in</span>`
-                                }
-                            </div>
-                        </div>
-                    `;
-                });
-            }
+            render();
+            if (currentView === 'map') updateMap();
         }
 
-        // Initialize or Update Interactive Map View
-        function updateMapView() {
-            const currentData = townData[currentTownKey];
-            
-            if (!map) {
-                map = L.map('map-container').setView([currentData.lat, currentData.lng], 13);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap'
-                }).addTo(map);
-            } else {
-                map.setView([currentData.lat, currentData.lng], 13);
-            }
-
-            // Clear old map markers
-            mapMarkers.forEach(m => map.removeLayer(m));
-            mapMarkers = [];
-
-            // Add Daytime Spots Markers
-            currentData.spots.forEach(s => {
-                const marker = L.marker([s.lat, s.lng]).addTo(map)
-                    .bindPopup(`
-                        <div style="color: #000; font-family: sans-serif;">
-                            <b style="font-size: 13px;">${s.title}</b><br/>
-                            <span style="font-size: 11px; color: #555;">${s.typeTag}</span><br/>
-                            <button onclick="openDirections(${s.lat}, ${s.lng}, '${s.title}')" style="margin-top: 6px; background: #0284c7; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer;">Get Directions →</button>
-                        </div>
-                    `);
-                mapMarkers.push(marker);
+        function filterCategory(cat) {
+            currentCategory = cat;
+            ['all', 'cafes', 'play', 'events'].forEach(c => {
+                document.getElementById(`cat-${c}`).className = (c === cat)
+                    ? "px-4 py-2 rounded-xl text-xs font-display font-bold bg-brand-600 text-white whitespace-nowrap shadow-md"
+                    : "px-4 py-2 rounded-xl text-xs font-display font-bold bg-slate-900 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap";
             });
-
-            // Add Event Markers
-            currentData.events.forEach(e => {
-                const marker = L.marker([e.lat, e.lng]).addTo(map)
-                    .bindPopup(`
-                        <div style="color: #000; font-family: sans-serif;">
-                            <b style="font-size: 13px;">${e.title}</b><br/>
-                            <span style="font-size: 11px; color: #16a34a; font-weight: bold;">${e.price === 0 ? 'FREE' : '£' + e.price.toFixed(2)}</span><br/>
-                            <button onclick="openDirections(${e.lat}, ${e.lng}, '${e.venue}')" style="margin-top: 6px; background: #0284c7; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer;">Get Directions →</button>
-                        </div>
-                    `);
-                mapMarkers.push(marker);
-            });
+            render();
         }
 
         function toggleView(view) {
@@ -405,109 +290,38 @@
             if (view === 'map') {
                 listWrap.classList.add('hidden');
                 mapWrap.classList.remove('hidden');
-                document.getElementById('view-btn-map').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-white transition";
-                document.getElementById('view-btn-list').className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
-                setTimeout(() => { map.invalidateSize(); updateMapView(); }, 200);
+                document.getElementById('view-btn-map').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition";
+                document.getElementById('view-btn-list').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition";
+                setTimeout(() => { updateMap(); }, 150);
             } else {
                 mapWrap.classList.add('hidden');
                 listWrap.classList.remove('hidden');
-                document.getElementById('view-btn-list').className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-white transition";
-                document.getElementById('view-btn-map').className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+                document.getElementById('view-btn-list').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold bg-slate-800 text-white transition";
+                document.getElementById('view-btn-map').className = "px-3.5 py-1.5 rounded-lg text-xs font-display font-bold text-slate-400 hover:text-white transition";
             }
         }
 
-        function selectTown(key) {
-            currentTownKey = key;
-            ['carlisle', 'keswick', 'penrith', 'whitehaven', 'workington'].forEach(k => {
-                const btn = document.getElementById(`town-${k}`);
-                if (btn) {
-                    btn.className = (k === key)
-                        ? "px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white border border-brand-500 transition"
-                        : "px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition";
-                }
-            });
-
-            document.getElementById('context-title').innerText = `Active in ${townData[key].name}`;
-            renderListings();
-            if (currentView === 'map') updateMapView();
-        }
-
-        function filterCategory(cat) {
-            currentCategory = cat;
-            ['all', 'play', 'cafes', 'events'].forEach(c => {
-                const btn = document.getElementById(`cat-${c}`);
-                if (btn) {
-                    btn.className = (c === cat)
-                        ? "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white whitespace-nowrap shadow-md"
-                        : "px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-950 text-slate-300 border border-slate-800 hover:text-white whitespace-nowrap";
-                }
-            });
-            renderListings();
-        }
-
-        function updateContext(mode) {
-            const title = document.getElementById('context-title');
-            const desc = document.getElementById('context-desc');
-            const icon = document.getElementById('context-icon');
-
-            if (mode === 'rainy') {
-                icon.innerText = '🌧️';
-                title.innerText = 'Rainy Day Filter Active';
-                desc.innerText = 'Prioritizing indoor soft play areas, museum hubs, and cozy bakeries.';
-                filterCategory('play');
-            } else if (mode === 'dining') {
-                icon.innerText = '☕';
-                title.innerText = 'Daytime Coffee & Food Specials';
-                desc.innerText = 'Showing independent traybakes, specialty roasters, and food pop-ups.';
-                filterCategory('cafes');
+        function updateMap() {
+            const data = townData[currentTown];
+            if (!map) {
+                map = L.map('map-container').setView([data.lat, data.lng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
             } else {
-                icon.innerText = '☀️';
-                title.innerText = `Clear Skies in ${townData[currentTownKey].name}`;
-                desc.innerText = 'Showing outdoor parks, garden cafés, and daytime community activities.';
-                filterCategory('all');
+                map.setView([data.lat, data.lng], 13);
             }
 
-            ['sunny', 'rainy', 'dining'].forEach(m => {
-                document.getElementById(`btn-${m}`).className = (m === mode) 
-                    ? "px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-600 text-white transition"
-                    : "px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition";
+            mapMarkers.forEach(m => map.removeLayer(m));
+            mapMarkers = [];
+
+            data.items.forEach(item => {
+                const marker = L.marker([item.lat, item.lng]).addTo(map)
+                    .bindPopup(`<b style="color:#000;">${item.title}</b><br/><span style="color:#555;font-size:11px;">${item.location}</span>`);
+                mapMarkers.push(marker);
             });
+            map.invalidateSize();
         }
 
-        // Modal Logic
-        let selectedEvent = null;
-
-        function openTicketModal(eventId) {
-            const allEvents = Object.values(townData).flatMap(t => t.events);
-            selectedEvent = allEvents.find(e => e.id === eventId);
-            if (!selectedEvent) return;
-
-            document.getElementById('modal-event-title').innerText = selectedEvent.title;
-            document.getElementById('modal-event-venue').innerText = selectedEvent.venue;
-            document.getElementById('modal-ticket-price').innerText = '£' + selectedEvent.price.toFixed(2);
-            document.getElementById('modal-total-price').innerText = '£' + selectedEvent.price.toFixed(2);
-            
-            document.getElementById('checkout-form').classList.remove('hidden');
-            document.getElementById('modal-success').classList.add('hidden');
-            document.getElementById('ticket-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('ticket-modal').classList.add('hidden');
-        }
-
-        function processTicket(e) {
-            e.preventDefault();
-            document.getElementById('checkout-form').classList.add('hidden');
-            document.getElementById('ticket-pass-name').innerText = selectedEvent.title;
-            document.getElementById('modal-success').classList.remove('hidden');
-        }
-
-        window.onload = () => {
-            renderListings();
-            updateMapView();
-        }
+        window.onload = () => { render(); };
     </script>
 </body>
 </html>
-
